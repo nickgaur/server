@@ -1,28 +1,40 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
-const express = require('express')
-const mysql = require('mysql')
+const express = require('express');
+const userRoutes = require('./Routes/Users');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const session = require('express-session');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const app = express();
 
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-})
-// CREATING CONNECTION
-db.connect((err) => {
-    if (err) {
-        throw err
-    }
-    else {
-        console.log("DATABASE CONNECTED!!")
-    }
-});
+app.use(cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true
+}))
+app.use(cookieParser())
+app.use(express.json())
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
-const app = express()
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        path: '/',
+        httpOnly: false,
+        maxAge: 24 * 60 * 60 * 1000
+    },
+}))
 
+// ROUTES
+app.use('/api/auth', userRoutes);
+app.use('*', (req, res) => res.send("Page Not Found"));
 
 const port = process.env.PORT || process.env.SERVER_PORT
 app.listen(port, () => {
