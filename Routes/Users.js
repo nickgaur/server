@@ -1,7 +1,7 @@
 const express = require('express')
 const Router = express.Router({ mergeParams: true })
 const { postLoginForm, renderHomepage, renderLoginForm, renderRegisterForm,
-     postRegisterForm, logout, postNewImage } = require('../Controller/Users')
+     postRegisterForm, logout } = require('../Controller/Users')
 const { isLoggedIn, isAdminLoggedIn } = require('../middleware/middleware')
 
 

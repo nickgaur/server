@@ -11,7 +11,7 @@ module.exports.renderHomepage = (req, res) => {
     let sql = "SELECT * FROM images";
     db.query(sql, (error, result) => {
         if (error) throw error;
-        res.render('home/home', { user,images: result });
+        res.render('home/home', { user, images: result });
     })
 }
 
@@ -25,7 +25,7 @@ module.exports.postLoginForm = (req, res) => {
     const sql = "SELECT * FROM Users WHERE email=?";
     db.query(sql, email, async (error, result) => {
         if (error) throw error;
-        if (result.length > 0) {
+        else if (result.length > 0) {
             if (password === result[0].password) {
                 req.session.user = result[0];
                 return res.redirect("/");
