@@ -1,14 +1,27 @@
 const express = require('express')
 const Router = express.Router({ mergeParams: true })
-const { postLoginData,renderLoginDetails } = require('../Controller/Users')
+const { postLoginForm, renderHomepage, renderLoginForm, renderRegisterForm,
+     postRegisterForm, logout, postNewImage } = require('../Controller/Users')
+const { isLoggedIn, isAdminLoggedIn } = require('../middleware/middleware')
 
 
 Router
-.route('/login')
-.get(renderLoginDetails)
-.post(postLoginData)
+    .route('/')
+    .get(isLoggedIn, renderHomepage)
 
+Router
+    .route('/login')
+    .get(renderLoginForm)
+    .post(postLoginForm)
 
+Router
+    .route('/register')
+    .get(isLoggedIn, isAdminLoggedIn, renderRegisterForm)
+    .post(isLoggedIn, isAdminLoggedIn, postRegisterForm)
+
+Router
+    .route("/logout")
+    .post(isLoggedIn,logout)
 
 
 module.exports = Router

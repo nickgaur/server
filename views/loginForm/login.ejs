@@ -1,0 +1,24 @@
+<%- layout("/layout/boilerplate") %>
+    <link rel="stylesheet" href="css/style.css">
+    <div class="card mx-auto mt-5">
+        <div class="card-body">
+            <h1 class="mb-3 text-center">Login Form</h1>
+            <form action="/login" method="POST">
+                <div class="form-group row">
+                    <label for="staticEmail" class="col-12 col-form-label text-left">Email</label>
+                    <div class="col-12">
+                        <input type="email" name="email" class="form-control mb-4" id="staticEmail"
+                            placeholder="john@smith.com">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-12 col-form-label text-left">Password</label>
+                    <div class="col-12">
+                        <input type="password" name="password" class="form-control" id="inputPassword"
+                            placeholder="Password">
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-4">Log in</button>
+            </form>
+        </div>
+    </div>
